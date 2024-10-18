@@ -1,4 +1,9 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using TallerProgramacion_SL.Data;
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<TallerProgramacion_SLContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("TallerProgramacion_SLContext") ?? throw new InvalidOperationException("Connection string 'TallerProgramacion_SLContext' not found.")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
