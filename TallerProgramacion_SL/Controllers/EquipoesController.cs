@@ -22,8 +22,7 @@ namespace TallerProgramacion_SL.Controllers
         // GET: Equipoes
         public async Task<IActionResult> Index()
         {
-            var tallerProgramacion_SLContext = _context.Equipo.Include(e => e.Estadio);
-            return View(await tallerProgramacion_SLContext.ToListAsync());
+            return View(await _context.Equipo.ToListAsync());
         }
 
         // GET: Equipoes/Details/5
@@ -35,7 +34,6 @@ namespace TallerProgramacion_SL.Controllers
             }
 
             var equipo = await _context.Equipo
-                .Include(e => e.Estadio)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (equipo == null)
             {
@@ -48,7 +46,6 @@ namespace TallerProgramacion_SL.Controllers
         // GET: Equipoes/Create
         public IActionResult Create()
         {
-            ViewData["EstadioId"] = new SelectList(_context.Set<Estadio>(), "Id", "Ciudad");
             return View();
         }
 
@@ -57,7 +54,7 @@ namespace TallerProgramacion_SL.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nombre,Ciudad,Titulos,AceptaExtranjeros,EstadioId")] Equipo equipo)
+        public async Task<IActionResult> Create([Bind("Id,Nombre,Ciudad,Titulos,AceptaExtranjeros")] Equipo equipo)
         {
             if (ModelState.IsValid)
             {
@@ -65,7 +62,6 @@ namespace TallerProgramacion_SL.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EstadioId"] = new SelectList(_context.Set<Estadio>(), "Id", "Ciudad", equipo.EstadioId);
             return View(equipo);
         }
 
@@ -82,7 +78,6 @@ namespace TallerProgramacion_SL.Controllers
             {
                 return NotFound();
             }
-            ViewData["EstadioId"] = new SelectList(_context.Set<Estadio>(), "Id", "Ciudad", equipo.EstadioId);
             return View(equipo);
         }
 
@@ -91,7 +86,7 @@ namespace TallerProgramacion_SL.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Ciudad,Titulos,AceptaExtranjeros,EstadioId")] Equipo equipo)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Ciudad,Titulos,AceptaExtranjeros")] Equipo equipo)
         {
             if (id != equipo.Id)
             {
@@ -118,7 +113,6 @@ namespace TallerProgramacion_SL.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EstadioId"] = new SelectList(_context.Set<Estadio>(), "Id", "Ciudad", equipo.EstadioId);
             return View(equipo);
         }
 
@@ -131,7 +125,6 @@ namespace TallerProgramacion_SL.Controllers
             }
 
             var equipo = await _context.Equipo
-                .Include(e => e.Estadio)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (equipo == null)
             {

@@ -20,8 +20,11 @@ namespace TallerProgramacion_SL.Controllers
         }
 
         // GET: Jugadors
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? equipoId)
         {
+            
+            //return View(await jugadores.ToListAsync());
+
             var tallerProgramacion_SLContext = _context.Jugador.Include(j => j.Equipo);
             return View(await tallerProgramacion_SLContext.ToListAsync());
         }
@@ -48,7 +51,6 @@ namespace TallerProgramacion_SL.Controllers
         // GET: Jugadors/Create
         public IActionResult Create()
         {
-            ViewData["EquipoId"] = new SelectList(_context.Set<Equipo>(), "Id", "Ciudad");
             return View();
         }
 
@@ -65,7 +67,6 @@ namespace TallerProgramacion_SL.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EquipoId"] = new SelectList(_context.Set<Equipo>(), "Id", "Ciudad", jugador.EquipoId);
             return View(jugador);
         }
 
@@ -82,7 +83,6 @@ namespace TallerProgramacion_SL.Controllers
             {
                 return NotFound();
             }
-            ViewData["EquipoId"] = new SelectList(_context.Set<Equipo>(), "Id", "Ciudad", jugador.EquipoId);
             return View(jugador);
         }
 
@@ -118,7 +118,6 @@ namespace TallerProgramacion_SL.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EquipoId"] = new SelectList(_context.Set<Equipo>(), "Id", "Ciudad", jugador.EquipoId);
             return View(jugador);
         }
 

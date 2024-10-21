@@ -4,7 +4,6 @@ namespace TallerProgramacion_SL.Models
 {
     public class Jugador
     {
-        [Key]
         public int Id { get; set; }
 
         [Required(ErrorMessage ="El nombre debe contener letras")]

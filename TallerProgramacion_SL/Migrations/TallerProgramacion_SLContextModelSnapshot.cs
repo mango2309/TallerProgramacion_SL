@@ -37,9 +37,6 @@ namespace TallerProgramacion_SL.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("EstadioId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -49,8 +46,6 @@ namespace TallerProgramacion_SL.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("EstadioId");
 
                     b.ToTable("Equipo");
                 });
@@ -110,17 +105,6 @@ namespace TallerProgramacion_SL.Migrations
                     b.HasIndex("EquipoId");
 
                     b.ToTable("Jugador");
-                });
-
-            modelBuilder.Entity("TallerProgramacion_SL.Models.Equipo", b =>
-                {
-                    b.HasOne("TallerProgramacion_SL.Models.Estadio", "Estadio")
-                        .WithMany()
-                        .HasForeignKey("EstadioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Estadio");
                 });
 
             modelBuilder.Entity("TallerProgramacion_SL.Models.Jugador", b =>

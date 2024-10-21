@@ -21,9 +21,5 @@ namespace TallerProgramacion_SL.Models
         [Required(ErrorMessage = "Debe especificar si acepta extranjeros.")]
         public bool AceptaExtranjeros { get; set; }
 
-        [Required(ErrorMessage = "El ID del estadio es obligatorio.")]
-        public int EstadioId { get; set; }
-
-        public Estadio Estadio { get; set; }
     }
 }
