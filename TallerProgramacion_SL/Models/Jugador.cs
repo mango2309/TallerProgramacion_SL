@@ -4,7 +4,7 @@ namespace TallerProgramacion_SL.Models
 {
     public class Jugador
     {
-        public int Id { get; set; }
+        public int JugadorId { get; set; }
 
         [Required(ErrorMessage ="El nombre debe contener letras")]
         [StringLength(100, ErrorMessage = "El nombre no puede tener más de 100 caracteres.")]

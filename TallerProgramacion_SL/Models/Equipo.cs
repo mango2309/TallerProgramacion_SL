@@ -5,7 +5,7 @@ namespace TallerProgramacion_SL.Models
     public class Equipo
     {
         [Key]
-        public int Id { get; set; }
+        public int EquipoId { get; set; }
 
         [Required(ErrorMessage = "El nombre del equipo es obligatorio.")]
         [StringLength(100, ErrorMessage = "El nombre no puede tener más de 100 caracteres.")]

@@ -20,11 +20,8 @@ namespace TallerProgramacion_SL.Controllers
         }
 
         // GET: Jugadors
-        public async Task<IActionResult> Index(int? equipoId)
+        public async Task<IActionResult> Index()
         {
-            
-            //return View(await jugadores.ToListAsync());
-
             var tallerProgramacion_SLContext = _context.Jugador.Include(j => j.Equipo);
             return View(await tallerProgramacion_SLContext.ToListAsync());
         }
@@ -39,7 +36,7 @@ namespace TallerProgramacion_SL.Controllers
 
             var jugador = await _context.Jugador
                 .Include(j => j.Equipo)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.JugadorId == id);
             if (jugador == null)
             {
                 return NotFound();
@@ -51,6 +48,7 @@ namespace TallerProgramacion_SL.Controllers
         // GET: Jugadors/Create
         public IActionResult Create()
         {
+            ViewData["JugadorId"] = new SelectList(_context.Equipo, "EquipoId", "EquipoId");
             return View();
         }
 
@@ -59,7 +57,7 @@ namespace TallerProgramacion_SL.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nombre,Posicion,Edad,EquipoId")] Jugador jugador)
+        public async Task<IActionResult> Create([Bind("JugadorId,Nombre,Posicion,Edad,EquipoId")] Jugador jugador)
         {
             if (ModelState.IsValid)
             {
@@ -67,6 +65,7 @@ namespace TallerProgramacion_SL.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["EquipoId"] = new SelectList(_context.Equipo, "EquipoId", "EquipoId", jugador.EquipoId);
             return View(jugador);
         }
 
@@ -83,6 +82,7 @@ namespace TallerProgramacion_SL.Controllers
             {
                 return NotFound();
             }
+            ViewData["EquipoId"] = new SelectList(_context.Equipo, "EquipoId", "EquipoId", jugador.EquipoId);
             return View(jugador);
         }
 
@@ -91,9 +91,9 @@ namespace TallerProgramacion_SL.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Posicion,Edad,EquipoId")] Jugador jugador)
+        public async Task<IActionResult> Edit(int id, [Bind("JugadorId,Nombre,Posicion,Edad,EquipoId")] Jugador jugador)
         {
-            if (id != jugador.Id)
+            if (id != jugador.JugadorId)
             {
                 return NotFound();
             }
@@ -107,7 +107,7 @@ namespace TallerProgramacion_SL.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!JugadorExists(jugador.Id))
+                    if (!JugadorExists(jugador.JugadorId))
                     {
                         return NotFound();
                     }
@@ -118,6 +118,7 @@ namespace TallerProgramacion_SL.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["EquipoId"] = new SelectList(_context.Equipo, "EquipoId", "EquipoId", jugador.EquipoId);
             return View(jugador);
         }
 
@@ -131,7 +132,7 @@ namespace TallerProgramacion_SL.Controllers
 
             var jugador = await _context.Jugador
                 .Include(j => j.Equipo)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.JugadorId == id);
             if (jugador == null)
             {
                 return NotFound();
@@ -157,7 +158,7 @@ namespace TallerProgramacion_SL.Controllers
 
         private bool JugadorExists(int id)
         {
-            return _context.Jugador.Any(e => e.Id == id);
+            return _context.Jugador.Any(e => e.JugadorId == id);
         }
     }
 }
